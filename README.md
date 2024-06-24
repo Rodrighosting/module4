@@ -1,19 +1,20 @@
 # Module 4
 
-This program is for creating a smart contract project that implements the mint(), transfer(), redeeming tokens, checking token balance and burning tokens.
+This program is for creating a smart contract project that implements minting, transferring, redeeming tokens, checking token balances, and burning tokens.
 
-## Description
+# Description
 
-Avalanche is a blockchain platform that provides decentralized apps and blockchain networks. Avalanche is designed to address the scalability issues that have conventional blockchain systems. The platform offers exceptional transaction speed and finality in milliseconds because of the consensus protocol, Avalanche. The adaptable architecture of Avalanche complements this scalability by enabling developers to design customized blockchain networks, or subnets, that satisfy particular needs and use cases. 
+Avalanche is a blockchain platform that provides decentralized apps and blockchain networks. Avalanche is designed to address the scalability issues of conventional blockchain systems. The platform offers exceptional transaction speed and finality in milliseconds because of the consensus protocol, Avalanche. The adaptable architecture of Avalanche complements this scalability by enabling developers to design customized blockchain networks, or subnets, that satisfy particular needs and use cases.
 
-## Getting Started
+# Getting Started
 
-### Executing program
+### Executing Program
 
-To run this program, you can use Remix, an online Solidity IDE. To get started, go to the Remix website at https://remix.ethereum.org/.
+To run this program, you can use Remix, an online Solidity IDE. To get started, go to the Remix website at [https://remix.ethereum.org/](https://remix.ethereum.org/).
 
-Once you are on the Remix website, create a new file by clicking on the "+" icon in the left-hand sidebar. Save the file with a .sol extension (e.g., project.sol). Copy and paste the following code into the file:
+Once you are on the Remix website, create a new file by clicking on the "+" icon in the left-hand sidebar. Save the file with a `.sol` extension (e.g., `project.sol`). Copy and paste the following code into the file:
 
+```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
@@ -47,7 +48,7 @@ contract Degen is ERC20, Ownable {
         _mint(msg.sender, amount);
     }
 
-    function mint(address to, uint256 amount) public onlyOwner {
+    function mintTo(address to, uint256 amount) public onlyOwner {
         _mint(to, amount);
     }
 
@@ -73,31 +74,29 @@ contract Degen is ERC20, Ownable {
         require(items[id].value > 0, "Item does not exist");
         require(balanceOf(msg.sender) >= items[id].value, "Insufficient balance");
 
-        _transfer(msg.sender, address(this), items[id].value);
+        // Mint new tokens to the sender's balance
+        _mint(msg.sender, items[id].value);
 
         emit ItemRedeemed(msg.sender, id, items[id].ching, items[id].value);
 
-
+        // Remove the redeemed item from the list
         delete items[id];
     }
 }
+```
 
+To compile the code, click on the "Solidity Compiler" tab in the left-hand sidebar. Make sure the "Compiler" option is set to "0.8.20" (or another compatible version), and then click on the "Compile `project.sol`" button.
 
+Once the code is compiled, you can deploy the contract by clicking on the "Deploy & Run Transactions" tab in the left-hand sidebar. Select the `Degen` contract from the dropdown menu, and then click on the "Deploy" button.
 
+Once the contract has been deployed, you can interact with it through various functions such as minting, transferring, redeeming tokens, checking token balances, and burning tokens.
 
-To compile the code, click on the "Solidity Compiler" tab in the left-hand sidebar. Make sure the "Compiler" option is set to "0.8.13" (or another compatible version), and then click on the "Compile + name of file(.sol)" button.
+# Authors
 
-Once the code is compiled, you can deploy the contract by clicking on the "Deploy & Run Transactions" tab in the left-hand sidebar. Select the "project" contract from the dropdown menu, and then click on the "Deploy" button.
-
-Once the contract has been deployed, you can interact with it through various functions such as mint(), transfer(), redeeming tokens, checking token balance and burning tokens.
-
-## Authors
-
-Contributors names and contact info
+Contributors names and contact info:
 
 Rodrigo B. Macabudbud
 
-
-## License
+# License
 
 This project is unlicensed.
