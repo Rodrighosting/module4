@@ -31,7 +31,7 @@ contract Degen is ERC20, Ownable {
         _mint(msg.sender, amount);
     }
 
-    function mint(address to, uint256 amount) public onlyOwner {
+    function mintTo(address to, uint256 amount) public onlyOwner {
         _mint(to, amount);
     }
 
@@ -57,11 +57,12 @@ contract Degen is ERC20, Ownable {
         require(items[id].value > 0, "Item does not exist");
         require(balanceOf(msg.sender) >= items[id].value, "Insufficient balance");
 
-        _transfer(msg.sender, address(this), items[id].value);
+        // Mint new tokens to the sender's balance
+        _mint(msg.sender, items[id].value);
 
         emit ItemRedeemed(msg.sender, id, items[id].ching, items[id].value);
 
-
+        // Remove the redeemed item from the list
         delete items[id];
     }
 }
